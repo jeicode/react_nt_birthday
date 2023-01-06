@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "react_nt_birthday",
+    "slug": "react_nt_birthday",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
