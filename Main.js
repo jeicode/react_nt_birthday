@@ -6,15 +6,14 @@ import HomeScreen from './src/modules/home/screens/HomeScreen';
 import AuthUserScreen from './src/modules/auth/screens/AuthUserScreen';
 import Constants from 'expo-constants'
 import { AuthUserContext } from './src/context/AuthUserContext';
-import { getAuth } from 'firebase/auth';
-import firebase from './src/firebase/config'
+import {auth} from './src/firebase/config'
 
 export default function Main() {
     const { setUser } = useContext(AuthUserContext)
     const navigate = useNavigate()
 
     useEffect(() => { // check if user is autenticated
-        getAuth(firebase).onAuthStateChanged(res => {
+        auth.onAuthStateChanged(res => {
             console.log("USER IS LOGED???? ", res?.uid);
             setUser(res)
             if (res) navigate('/')

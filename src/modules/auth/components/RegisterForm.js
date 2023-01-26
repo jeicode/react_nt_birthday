@@ -3,9 +3,10 @@ import React,{ useContext } from 'react'
 import { StyleSheet, View, Button } from 'react-native';
 import FormikInput from '../../../shared/components/FormikInput'
 import {registerSchema} from '../../../formsValidations/authSchemas'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthUserContext } from '../../../context/AuthUserContext';
-import { Navigate } from 'react-router-native';
+
+import {auth} from '../../../firebase/config'
 const initialValues = {
     email: '',
     password: '',
@@ -13,9 +14,7 @@ const initialValues = {
 }
 export default function RegisterForm() {
     const { setUser } = useContext(AuthUserContext);
-
     const registerUser = async({email, password}) => {
-        const auth = getAuth();
         const userCredential = await createUserWithEmailAndPassword(auth,email,password)
         console.log('%cRegisterForm.js line:20 userCredential.user.email', 'color: #007acc;', userCredential.user.email);
         setUser(userCredential.user)

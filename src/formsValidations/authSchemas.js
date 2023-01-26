@@ -5,7 +5,7 @@ const passwordValidation = yup.string().required().max(50).min(6)
 
 const loginSchema = yup.object().shape({
     email: emailValidation,
-    password: [yup.string().required(),]
+    password: yup.string().required()
 })
 
 

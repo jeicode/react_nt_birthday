@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {getAuth} from 'firebase/auth';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 const projectId = 'react-nt-birthday-8a9da'
@@ -14,5 +16,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+
+
+export default firebaseApp
+const auth = getAuth(firebaseApp)
+export { auth }
 

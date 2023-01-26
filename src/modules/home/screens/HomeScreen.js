@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { View, Text, Button} from 'react-native'
 import styles from '../../../shared/styles'
 
 
-import firebase from '../../../firebase/config'
-import {getAuth, signOut} from 'firebase/auth'
+import {auth} from '../../../firebase/config'
+import {signOut} from 'firebase/auth'
 
 
 export default function HomeScreen() {
@@ -19,7 +19,6 @@ export default function HomeScreen() {
 
 
 function LogOut() {
-    const auth = getAuth(firebase);
     const logOut = () => {
         signOut(auth).then(res => console.log("logout ", res))
     }
