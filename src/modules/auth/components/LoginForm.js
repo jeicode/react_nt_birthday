@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, StyleSheet, Button } from 'react-native'
+import React, {useState} from 'react'
+import { View, StyleSheet, Button, Text} from 'react-native'
 import { Formik } from 'formik'
 import FormikInput from '../../../shared/components/FormikInput'
 import { loginSchema } from '../../../formsValidations/authSchemas'
@@ -11,11 +11,14 @@ const initialValues = {
     email: '',
 }
 export default function LoginForm() {
+    const [otherErrors, setOtherErrors] = useState(undefined);
 
     const login = ({email, password}) => {
-        console.log("login.. ", email)
-        signInWithEmailAndPassword(auth,email, password)
+        signInWithEmailAndPassword(auth,email, password).catch( ({...err}) => {
+            setOtherErrors(err?.code)
+        })
     }
+    
     return (
         <Formik
             validationSchema={loginSchema}
@@ -33,6 +36,7 @@ export default function LoginForm() {
                         placeholderTextColor='#969696'
                         name='password'/>
                     <Button onPress={handleSubmit} type="submit" title="Log In" />
+                    { otherErrors && <Text style={styles.otherErrors}> {otherErrors} </Text> }
                 </View>
             )}
         </Formik>
@@ -50,5 +54,10 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#fff',
         fontSize: 18,
+    },
+    otherErrors: {
+        color:'red',
+        marginTop:4,
+        fontSize:12
     }
 });

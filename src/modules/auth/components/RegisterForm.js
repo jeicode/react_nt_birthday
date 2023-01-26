@@ -1,10 +1,9 @@
 import { Formik } from 'formik';
-import React,{ useContext } from 'react'
-import { StyleSheet, View, Button } from 'react-native';
+import React,{ useState } from 'react'
+import { StyleSheet, View, Button, Text } from 'react-native';
 import FormikInput from '../../../shared/components/FormikInput'
 import {registerSchema} from '../../../formsValidations/authSchemas'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { AuthUserContext } from '../../../context/AuthUserContext';
 
 import {auth} from '../../../firebase/config'
 const initialValues = {
@@ -13,11 +12,13 @@ const initialValues = {
     repeatPassword: ''
 }
 export default function RegisterForm() {
-    const { setUser } = useContext(AuthUserContext);
+    const [otherErrors, setOtherErrors] = useState(undefined);
+
     const registerUser = async({email, password}) => {
-        const userCredential = await createUserWithEmailAndPassword(auth,email,password)
-        console.log('%cRegisterForm.js line:20 userCredential.user.email', 'color: #007acc;', userCredential.user.email);
-        setUser(userCredential.user)
+        createUserWithEmailAndPassword(auth,email,password).catch( ({...error})  => {
+            setOtherErrors(error?.code)
+            console.log("REGISTER USER ERROR ", error?.code);
+        })
 
     }
     return (
@@ -43,7 +44,9 @@ export default function RegisterForm() {
                             placeholderTextColor='#969696'
                             name='repeatPassword' />
                         <Button onPress={handleSubmit} type="submit" title="Register" />
+                        { otherErrors && <Text style={styles.otherErrors}> {otherErrors} </Text> }
                     </View>
+                    
                 )}
             </Formik>
 
@@ -51,13 +54,6 @@ export default function RegisterForm() {
     );
 }
 
-function defaultValue() {
-    return {
-        email: '',
-        password: '',
-        repeatPassword: '',
-    };
-}
 
 const styles = StyleSheet.create({
     btnText: {
@@ -79,4 +75,9 @@ const styles = StyleSheet.create({
     error: {
         borderColor: '#940c0c',
     },
+    otherErrors: {
+        color:'red',
+        marginTop:4,
+        fontSize:12
+    }
 });
