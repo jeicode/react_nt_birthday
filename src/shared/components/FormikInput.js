@@ -9,16 +9,15 @@ export default function FormikInput({ name, ...props }) {
         <>
             <TextInput
                 placeholder='Email'
-                style={[styles.input, (meta.error && meta.touched) && styles.error]}
+                style={[styles.input, (meta.error) && styles.error]}
                 placeholderTextColor='#969696'
                 onChangeText={value => {
                     helpers.setValue(value)
-                    helpers.setTouched(true)
                 }}
                 value={field.value}
                 {...props}
             />
-            {(meta.error && meta.touched)&& <Text style={styles.txtError}>{meta.error}</Text> }
+            {(meta.error)&& <Text style={styles.txtError}>{meta.error}</Text> }
         </>
     )
 }
@@ -38,12 +37,12 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         color: '#fff',
-        width: 200,
+        width: 260,
         marginBottom: 25,
         backgroundColor: '#1e3040',
         paddingHorizontal: 30,
         borderRadius: 50,
-        fontSize: 18,
+        fontSize: 14,
         borderWidth: 1,
         borderColor: '#1e3040',
     },

@@ -2,15 +2,15 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-const projectId = 'react-nt-birthday'
+const projectId = 'react-nt-birthday-8a9da'
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAGCq8p4ih3CboyyuZnazae1fCnCdU7Ons",
+    apiKey: "AIzaSyDZIhqZoTbww3PCLYTMHRWuUIWbKlFSOFs",
     authDomain: `${projectId}.firebaseapp.com`,
     projectId,
     storageBucket: `${projectId}.appspot.com`,
-    messagingSenderId: "426055258850",
-    appId: "1:426055258850:web:0afc7e024e405693fa84bb"
+    messagingSenderId: "706899042434",
+    appId: "1:706899042434:web:f396beefe447d9a2e7549b"
 };
 
 // Initialize Firebase

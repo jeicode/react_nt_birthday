@@ -14,13 +14,15 @@ export default function LoginForm() {
             validationSchema={loginSchema}
             initialValues={initialValues}
             onSubmit={values => console.log(values)}>
-            {({ handleSubmit }) => (
+            {({ handleSubmit, errors }) => (
                 <View style={styles.view}>
                     <FormikInput
+                        errors={errors}
                         placeholder='Email'
                         placeholderTextColor='#969696'
                         name='email'/>
                     <FormikInput
+                        errors={errors}
                         placeholder='Password'
                         secureTextEntry 
                         placeholderTextColor='#969696'

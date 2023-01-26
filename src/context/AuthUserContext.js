@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const AuthUserContext = React.createContext(null)
 
 function AuthUserContextProvider({children}) {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(undefined)
 
     const data = {
         user, setUser
