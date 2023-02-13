@@ -6,8 +6,9 @@ import HomeScreen from './src/modules/home/screen/HomeScreen';
 import AuthUserScreen from './src/modules/auth/screens/AuthUserScreen';
 import Constants from 'expo-constants'
 import { AuthUserContext } from './src/context/AuthUserContext';
-import {auth} from './src/firebase/config'
-import globalStyles from './src/shared/styles';
+import { auth } from './src/firebase/config'
+import BirthdayForm from 'src/modules/birthday/components/BirthdayForm';
+import ListBirthday from 'src/modules/birthday/components/ListBirthday';
 
 export default function Main() {
     const { setUser } = useContext(AuthUserContext)
@@ -15,24 +16,30 @@ export default function Main() {
 
     useEffect(() => { // check if user is autenticated
         auth.onAuthStateChanged(res => {
-            // console.log("USER IS LOGED???? ", res?.uid);
+            console.log("USER IS LOGED???? ", res?.uid);
             setUser(res)
             if (res) navigate('/')
             else navigate('/auth/user')
         })
     }, [])
 
+
     return (
         <>
             <StatusBar style="light" backgroundColor='#15212b' />
             <ScrollView contentContainerStyle={[styles.container]}>
                 <Routes>
-                    <Route path='/' element={<HomeScreen />} />
+                    
+                    <Route path='/' element={<HomeScreen />} >
+                        <Route path='/' element={<ListBirthday />} />
+                        <Route path='/new/birthday' element={<BirthdayForm />} />
+                    </Route>
                     <Route path='/auth/user' element={<AuthUserScreen />} />
 
                 </Routes>
 
             </ScrollView>
+
 
         </>
 

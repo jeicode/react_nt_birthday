@@ -1,30 +1,21 @@
-import React from 'react'
-import { View, Button} from 'react-native'
+import React, { useContext } from 'react'
+import { View } from 'react-native'
+import { Outlet } from 'react-router-native'
+import { AuthUserContext } from 'src/context/AuthUserContext'
 
-import {signOut} from 'firebase/auth'
-import {auth} from 'src/firebase/config'
-import ListBirthday from 'src/modules/birthday/components/ListBirthday'
+import ActionBar from 'src/shared/components/ActionBar'
 
 
 export default function HomeScreen() {
-
+    const {user} = useContext(AuthUserContext)
+    if (!user) return null
     return (
-        <View>
-            <ListBirthday/>
-            <LogOut />
-        </View>
+        <>
+            <View>
+                <Outlet />
+            </View>
+            <ActionBar />
+        </>
     )
 }
 
-
-function LogOut() {
-    const logOut = () => {
-        signOut(auth).then(res => console.log("logout ", res))
-    }
-
-    return (
-        <View>
-            <Button title="LogOut" onPress={logOut} />
-        </View>
-    )
-}

@@ -1,23 +1,70 @@
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import { Text, TouchableOpacity, StyleSheet, View, Alert } from 'react-native'
+import React, { useContext } from 'react'
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from 'src/firebase/config';
+import { AuthUserContext } from 'src/context/AuthUserContext';
 
-export default function Birthday(props) {
-
-
+export default function BirthdayItem({ birthday, is_past, setGetBirthdays}) {
+    const {user} = useContext(AuthUserContext)
     return (
         <TouchableOpacity
             style={[
                 styles.card,
-                styles.current
+                is_past && styles.past,
+                birthday.remaining_days == 0 && styles.today,
+                birthday.remaining_days >= 1 && styles.normal
             ]}
-            onPress={() => {}}>
+            onPress={() => alertDelete({birthday, user, setGetBirthdays}) }>
             <Text style={styles.userName}>
-                David Culian
+                {`${birthday.name} ${birthday.lastname}`}
             </Text>
-            <Text style={{ color: '#fff' }}>Cumpleaños pasado</Text>
+
+            {is_past ?
+                <Text style={{ color: '#fff' }}>Past Birthday</Text> :
+                <InfoDays remaining_days={birthday.remaining_days} />}
+
         </TouchableOpacity>
     );
 }
+
+
+function alertDelete({birthday, user, setGetBirthdays}) {
+    return Alert.alert(
+        'Delete Birthday',
+        `Are you sure delete Birthday of ${birthday.name} ${birthday.lastname}?`, 
+        [
+            {
+                text:'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress:  () => {
+                    deleteDoc(doc(db, `birthday_${user.uid}`, birthday.id)).then( () => {
+                        setGetBirthdays(true);
+                    }).catch( res =>console.log("res ", res))
+                }
+
+            },
+    ])
+
+}
+
+
+function InfoDays({ remaining_days }){
+    let descBirthday = ""
+    if (remaining_days === 0) descBirthday = 'Today is your Birthday 🥳'
+    else if (remaining_days === 1) descBirthday = `Remain ${remaining_days} Day`
+    else descBirthday = `Remain ${remaining_days} Days`
+
+    return (
+        <View style={styles.textDays}>
+            <Text>{descBirthday}</Text>
+        </View>
+    )
+}
+
+
 
 const styles = StyleSheet.create({
     card: {
@@ -29,23 +76,23 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 15,
     },
-    actual: {
+    today: {
         backgroundColor: '#559204',
     },
-    current: {
+    normal: {
         backgroundColor: '#1ae1f2',
     },
-    pasat: {
+    past: {
         backgroundColor: '#820000',
     },
     userName: {
         color: '#fff',
         fontSize: 16,
     },
-    textCurrent: {
+    textDays: {
         backgroundColor: '#fff',
         borderRadius: 20,
-        width: 50,
+        width: 100,
         alignItems: 'center',
         justifyContent: 'center',
     },

@@ -1,31 +1,24 @@
-import React from 'react';
-import { StyleSheet, View, ScrollView} from 'react-native';
+import React  from 'react';
+import { StyleSheet, ScrollView } from 'react-native';
 
-
-import 'firebase/firestore';
 import BirthdayItem from './BirthdayItem';
-import globalStyles from 'src/shared/styles';
+import useBirthdays from 'src/hooks/useBirthdays';
 
 export default function ListBirthday(props) {
-    const { user } = props;
-    const listBirthday = [1,2,3,4,5,6,7,8,9]
+
+    const {listBirthday, pastBirthdays, setGetBirthdays } =  useBirthdays()
 
     return (
-        <ScrollView contentContainerStyle={[styles.container, globalStyles.inspect]}>
-            <View style={styles.scrollView}>
-                { listBirthday.map((b, index) => <BirthdayItem key={index}/> )}
-            </View>
-        
+        <ScrollView contentContainerStyle={[styles.scrollView]}>
+            {listBirthday.map((b) => <BirthdayItem key={b.id} birthday={b} setGetBirthdays={setGetBirthdays} />)}
+            {pastBirthdays.map(b => <BirthdayItem is_past={true} key={b.id} birthday={b} setGetBirthdays={setGetBirthdays} />)}
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center'
-    },
     scrollView: {
-        marginBottom: 50,
+        paddingBottom: 50,
         width: '100%'
     },
 });

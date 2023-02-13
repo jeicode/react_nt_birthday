@@ -5,10 +5,11 @@ import FormikInput from '../../../shared/components/FormikInput'
 import { loginSchema } from '../../../formsValidations/authSchemas'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebase/config'
+import globalStyles from 'src/shared/styles'
 
 const initialValues = {
-    password: '',
-    email: '',
+    password: '123456',
+    email: 'admin@gmail.com',
 }
 export default function LoginForm() {
     const [otherErrors, setOtherErrors] = useState(undefined);
@@ -25,7 +26,7 @@ export default function LoginForm() {
             initialValues={initialValues}
             onSubmit={values => login(values) }>
             {({ handleSubmit }) => (
-                <View style={styles.view}>
+                <View style={[styles.view]}>
                     <FormikInput
                         placeholder='Email'
                         placeholderTextColor='#969696'
@@ -47,8 +48,6 @@ export default function LoginForm() {
 const styles = StyleSheet.create({
     view: {
         width:'100%',
-        flex:1,
-        justifyContent: 'center',
         alignItems: 'center'
     },
     btnText: {
