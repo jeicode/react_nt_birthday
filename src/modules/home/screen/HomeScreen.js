@@ -11,7 +11,7 @@ export default function HomeScreen() {
     if (!user) return null
     return (
         <>
-            <View>
+            <View style={{height:'100%'}}>
                 <Outlet />
             </View>
             <ActionBar />

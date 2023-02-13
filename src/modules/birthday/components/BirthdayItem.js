@@ -4,7 +4,7 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from 'src/firebase/config';
 import { AuthUserContext } from 'src/context/AuthUserContext';
 
-export default function BirthdayItem({ birthday, is_past, setGetBirthdays}) {
+export default function BirthdayItem({ birthday, is_past, setIsloading}) {
     const {user} = useContext(AuthUserContext)
     return (
         <TouchableOpacity
@@ -14,7 +14,7 @@ export default function BirthdayItem({ birthday, is_past, setGetBirthdays}) {
                 birthday.remaining_days == 0 && styles.today,
                 birthday.remaining_days >= 1 && styles.normal
             ]}
-            onPress={() => alertDelete({birthday, user, setGetBirthdays}) }>
+            onPress={() => alertDelete({birthday, user, setIsloading}) }>
             <Text style={styles.userName}>
                 {`${birthday.name} ${birthday.lastname}`}
             </Text>
@@ -28,7 +28,7 @@ export default function BirthdayItem({ birthday, is_past, setGetBirthdays}) {
 }
 
 
-function alertDelete({birthday, user, setGetBirthdays}) {
+function alertDelete({birthday, user, setIsloading}) {
     return Alert.alert(
         'Delete Birthday',
         `Are you sure delete Birthday of ${birthday.name} ${birthday.lastname}?`, 
@@ -41,7 +41,7 @@ function alertDelete({birthday, user, setGetBirthdays}) {
                 text: 'Delete',
                 onPress:  () => {
                     deleteDoc(doc(db, `birthday_${user.uid}`, birthday.id)).then( () => {
-                        setGetBirthdays(true);
+                        setIsloading(true)
                     }).catch( res =>console.log("res ", res))
                 }
 
@@ -53,7 +53,7 @@ function alertDelete({birthday, user, setGetBirthdays}) {
 
 function InfoDays({ remaining_days }){
     let descBirthday = ""
-    if (remaining_days === 0) descBirthday = 'Today is your Birthday 🥳'
+    if (remaining_days === 0) descBirthday = 'Today is the Birthday 🥳'
     else if (remaining_days === 1) descBirthday = `Remain ${remaining_days} Day`
     else descBirthday = `Remain ${remaining_days} Days`
 

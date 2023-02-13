@@ -7,9 +7,10 @@ export default function useBirthdays() {
     const { user } = useContext(AuthUserContext)
     const [listBirthday, setListBirthday] = useState([]);
     const [pastBirthdays, setPastBirthdays] = useState([]);
-    const [getBirtdays, setGetBirthdays] = useState(true)
+    const [isLoading, setIsloading] = useState(true)
 
     const orderBirthdays = useCallback( (timenow, birthdayDate, birthday) =>{
+
         const bdMonth = birthdayDate.getMonth()
         const currMonth = timenow.getMonth()
         const bdDate = birthdayDate.getDate()
@@ -19,30 +20,36 @@ export default function useBirthdays() {
         const diffDays = Number((diffTime / (1000 * 3600 * 24)).toFixed())
     
         birthday['remaining_days'] = diffDays
-        if ((bdMonth >= currMonth) && bdDate >= currDate) setListBirthday(last => last.concat(birthday))
-        else setPastBirthdays(last => last.concat(birthday))
+        if ((bdMonth >= currMonth) && bdDate >= currDate) return {birthday}
+        else return {birthday, is_past:true}
 
     },[])
 
     
     useEffect(() => {
-        if (getBirtdays) {
+        if (isLoading) {
             const docRef = collection(db, `birthday_${user.uid}`);
             const q = query(docRef, orderBy('birthdayDate', 'asc'))
             const currDate = new Date()
             currDate.setYear(2000); // set the same year to birthday list
             getDocs(q).then(querySnapshot => {
+                let listBirt = []
+                let pastBirt = []
                 querySnapshot.forEach((doc) => {
                     const timestamp = doc.data().birthdayDate.seconds * 1000
-                    orderBirthdays(currDate, new Date(timestamp), { id: doc.id, ...doc.data() })
+                    const {birthday, is_past } = orderBirthdays(currDate, new Date(timestamp), { id: doc.id, ...doc.data() })
+                    if (is_past) pastBirt.push(birthday)
+                    else listBirt.push(birthday)
+                    
                 })
-    
+                setListBirthday(listBirt);
+                setPastBirthdays(pastBirt)    
+                setIsloading(false);
             });
-            setGetBirthdays(false);
         }
-    }, [getBirtdays])
+    }, [isLoading])
 
 
-    return {listBirthday, pastBirthdays, setGetBirthdays}
+    return {listBirthday, pastBirthdays, setIsloading, isLoading}
 
 }
