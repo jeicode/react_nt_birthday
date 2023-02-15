@@ -3,14 +3,15 @@ import React, { useContext } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from 'src/firebase/config';
 import { AuthUserContext } from 'src/context/AuthUserContext';
+import globalStyles from 'src/shared/styles';
 
-export default function BirthdayItem({ birthday, is_past, setIsloading}) {
+export default function BirthdayItem({ birthday, setIsloading}) {
     const {user} = useContext(AuthUserContext)
     return (
         <TouchableOpacity
             style={[
                 styles.card,
-                is_past && styles.past,
+                birthday.is_past && styles.past,
                 birthday.remaining_days == 0 && styles.today,
                 birthday.remaining_days >= 1 && styles.normal
             ]}
@@ -19,10 +20,9 @@ export default function BirthdayItem({ birthday, is_past, setIsloading}) {
                 {`${birthday.name} ${birthday.lastname}`}
             </Text>
 
-            {is_past ?
-                <Text style={{ color: '#fff' }}>Past Birthday</Text> :
+            {birthday.is_past ?
+                <Text style={globalStyles.textLigth}>Past Birthday</Text> :
                 <InfoDays remaining_days={birthday.remaining_days} />}
-
         </TouchableOpacity>
     );
 }

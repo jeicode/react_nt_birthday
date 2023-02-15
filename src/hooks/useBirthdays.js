@@ -6,7 +6,6 @@ import { db } from 'src/firebase/config';
 export default function useBirthdays() {
     const { user } = useContext(AuthUserContext)
     const [listBirthday, setListBirthday] = useState([]);
-    const [pastBirthdays, setPastBirthdays] = useState([]);
     const [isLoading, setIsloading] = useState(true)
 
     const orderBirthdays = useCallback( (timenow, birthdayDate, birthday) =>{
@@ -20,6 +19,8 @@ export default function useBirthdays() {
         const diffDays = Number((diffTime / (1000 * 3600 * 24)).toFixed())
     
         birthday['remaining_days'] = diffDays
+        birthday['is_past'] = diffDays < 0
+
         if ((bdMonth >= currMonth) && bdDate >= currDate) return {birthday}
         else return {birthday, is_past:true}
 
@@ -40,16 +41,15 @@ export default function useBirthdays() {
                     const {birthday, is_past } = orderBirthdays(currDate, new Date(timestamp), { id: doc.id, ...doc.data() })
                     if (is_past) pastBirt.push(birthday)
                     else listBirt.push(birthday)
-                    
                 })
-                setListBirthday(listBirt);
-                setPastBirthdays(pastBirt)    
+
+                setListBirthday(listBirt.concat(pastBirt));
                 setIsloading(false);
             });
         }
     }, [isLoading])
 
 
-    return {listBirthday, pastBirthdays, setIsloading, isLoading}
+    return {listBirthday, setIsloading, isLoading}
 
 }

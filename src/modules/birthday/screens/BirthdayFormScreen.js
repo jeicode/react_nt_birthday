@@ -8,26 +8,22 @@ import { birthdayFormSchema } from 'src/formsValidations/birthdaySchemas';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from 'src/firebase/config';
 import { AuthUserContext } from 'src/context/AuthUserContext';
-import { useNavigate } from 'react-router-native'
 
 const initialValues = {
     name: "",
     lastname: "",
     birthDate: ""
 }
-export default function BirthdayForm() {
-
+export default function BirthdayFormScreen({navigation}) {
     const currentDate = new Date()
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
-    const { user } = useContext(AuthUserContext)
-    const navigate = useNavigate();
-    
+    const { user } = useContext(AuthUserContext)    
     const createBirthday = useCallback(async (values) => {
         let brd = new Date(values.birthDate)
         brd.setYear(2000)
         try {
             await addDoc(collection(db, 'birthday_' + user.uid), {birthdayDate:brd, ...values})
-            navigate("/")
+            navigation.navigate('home')
         } catch (e) {
             console.error("Error adding document: ", e);
         }

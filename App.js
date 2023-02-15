@@ -1,19 +1,20 @@
 import React from 'react';
-import {LogBox} from 'react-native'
-import { NativeRouter } from 'react-router-native';
+import { LogBox } from 'react-native'
 
 import Main from './Main';
 import { AuthUserContextProvider } from 'src/context/AuthUserContext';
+import { NavigationContainer } from '@react-navigation/native'
+
 
 LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native"])
 
 export default function App() {
   return (
-    <NativeRouter>
-      <AuthUserContextProvider children>
+    <AuthUserContextProvider>
+      <NavigationContainer>
         <Main />
-      </AuthUserContextProvider>
-    </NativeRouter>
+      </NavigationContainer>
+    </AuthUserContextProvider>
   );
 }
 
