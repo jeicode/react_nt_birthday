@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from 'src/modules/home/HomeScreen'
 import DetailBirthday from 'src/modules/birthday/components/DetailBirthday'
 import globalStyles from 'src/shared/styles'
+import { ROUTES } from 'src/constants/routes'
 
 
 /**
@@ -15,14 +16,14 @@ const Stack = createNativeStackNavigator()
 export default function HomeStack() {
     return (
         <Stack.Navigator 
-            initialRouteName="home" 
+            initialRouteName={ROUTES.HOME}
             screenOptions={{
                 headerStyle: globalStyles.backgroundColor,
                 headerTitleStyle: globalStyles.textLigth,
                 contentStyle: globalStyles.backgroundColor
             }}>
-            <Stack.Screen name='home' component={HomeScreen} options={{ title: 'Home' }} />
-            <Stack.Screen name='detailBirthday' component={DetailBirthday} options={{ title: 'Detail Birthday' }} />
+            <Stack.Screen name={ROUTES.HOME} component={HomeScreen} options={{ title: 'Home' }} />
+            <Stack.Screen name={ROUTES.DETAIL_BIRTHDAY} component={DetailBirthday} options={{ title: 'Detail Birthday' }} />
         </Stack.Navigator>
     )
 }

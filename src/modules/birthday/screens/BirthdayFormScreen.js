@@ -8,6 +8,7 @@ import { birthdayFormSchema } from 'src/formsValidations/birthdaySchemas';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from 'src/firebase/config';
 import { AuthUserContext } from 'src/context/AuthUserContext';
+import { ROUTES } from 'src/constants/routes';
 
 const initialValues = {
     name: "",
@@ -23,7 +24,7 @@ export default function BirthdayFormScreen({navigation}) {
         brd.setYear(2000)
         try {
             await addDoc(collection(db, 'birthday_' + user.uid), {birthdayDate:brd, ...values})
-            navigation.navigate('home')
+            navigation.navigate(ROUTES.HOME)
         } catch (e) {
             console.error("Error adding document: ", e);
         }

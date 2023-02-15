@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-native'
+import { ROUTES } from 'src/constants/routes'
 import ListBirthday from 'src/modules/birthday/components/ListBirthday'
+import logOut from 'src/shared/helpers/logOut'
 
 
 export default function HomeScreen({ navigation }) {
@@ -8,10 +11,14 @@ export default function HomeScreen({ navigation }) {
         navigation.addListener('focus', () => {
             setReload(true)
         }
-    )}, [navigation.addListener])
+        )
+    }, [navigation.addListener])
 
     return (
-        <ListBirthday reload={reload} setReload={setReload} />
+        <>
+            <Button title='Logout' onPress={logOut} />
+            <ListBirthday reload={reload} setReload={setReload} />
+        </>
     )
 }
 

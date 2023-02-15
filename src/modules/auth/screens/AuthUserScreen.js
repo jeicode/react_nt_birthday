@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import globalStyles from "src/shared/styles";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
@@ -24,10 +25,12 @@ export default function AuthUserScreen() {
   );
 }
 
+globalStyles
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor: globalStyles.backgroundColor.backgroundColor
   },
   logo: {
     width: "80%",
