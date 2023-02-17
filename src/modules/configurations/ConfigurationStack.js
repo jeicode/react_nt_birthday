@@ -2,24 +2,28 @@
 
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import NotificationScreen from './NotificationScreen'
+import { ROUTES } from 'src/constants/routes'
+import ConfigurationScreen from './ConfigurationScreen'
 import screenOptionsStack from 'src/shared/screenOptionsStack'
+
+
 
 /**
  *  definimos las rutas que va tener acceso nuestro stack del Home
  */
 const Stack = createNativeStackNavigator()
 
-export default function NotificationStack({navigation}) {
+export default function ConfigurationStack({ navigation }) {
     return (
         <Stack.Navigator 
-            initialRouteName="notifications" 
+            initialRouteName={ROUTES.CONFIGURATION}
             screenOptions={screenOptionsStack}>
             <Stack.Screen 
-                name='notifications' 
-                component={NotificationScreen} 
+                name={ROUTES.CONFIGURATION} 
+                component={ConfigurationScreen} 
                 options={{ 
-                    title: 'Notifications'
+                    headerTitleAlign: 'center',
+                    title: 'Configuration' 
                 }} />
         </Stack.Navigator>
     )

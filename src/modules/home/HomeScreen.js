@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-native'
-import { ROUTES } from 'src/constants/routes'
 import ListBirthday from 'src/modules/birthday/components/ListBirthday'
-import logOut from 'src/shared/helpers/logOut'
 
 
 export default function HomeScreen({ navigation }) {
@@ -16,8 +13,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <>
-            <Button title='Logout' onPress={logOut} />
-            <ListBirthday reload={reload} setReload={setReload} />
+            <ListBirthday navigation={navigation} reload={reload} setReload={setReload} />
         </>
     )
 }

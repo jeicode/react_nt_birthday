@@ -1,12 +1,12 @@
 import React from 'react'
 import { useField } from 'formik'
 import { TextInput, Text, StyleSheet, View } from 'react-native'
-import {formatDate} from '../helpers/formatDate';
+import {formatDatePicker} from '../helpers/formatDate';
 
 export default function FormikInput({ name, type, value, onPress, timestamp, setValues, ...props }) {
     const isDatePicker = type === 'datePicker';
     const [field, meta, helpers] = useField(name)
-    if(isDatePicker) value = formatDate({ date: field.value, timestamp })
+    if(isDatePicker) value = formatDatePicker({ date: field.value, timestamp })
     
     
     return (

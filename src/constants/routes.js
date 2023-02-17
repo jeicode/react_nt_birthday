@@ -5,5 +5,6 @@ export const ROUTES = {
     REGISTER: 'register',
     HOME: 'home',
     CREATE_BIRTHDAY:'createBirthday',
-    DETAIL_BIRTHDAY: 'detailBirthday'
+    DETAIL_BIRTHDAY: 'detailBirthday',
+    CONFIGURATION: 'config'
 }

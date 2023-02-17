@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import globalStyles from "src/shared/styles";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
@@ -12,11 +12,12 @@ export default function AuthUserScreen() {
   return (
     <View style={[styles.view]}>
       <Image style={styles.logo} source={{ uri: urlLOgo }} />
-      {loginIsActive ? <LoginForm /> : <RegisterForm />}
+      <ScrollView>
+        {loginIsActive ? <LoginForm /> : <RegisterForm />}
+      </ScrollView>
       <TouchableOpacity
         style={[styles.switchBtn]}
-        onPress={() => setLoginIsActive((oldVal) => !oldVal)}
-      >
+        onPress={() => setLoginIsActive((oldVal) => !oldVal)}>
         <Text style={styles.bottomBtnText}>
           {loginIsActive ? "Don't have an account?" : "You have an account?"}
         </Text>
@@ -29,7 +30,7 @@ globalStyles
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    alignItems:'center',
+    alignItems: 'center',
     backgroundColor: globalStyles.backgroundColor.backgroundColor
   },
   logo: {
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   switchBtn: {
-    marginTop: 30,
+    marginBottom: 23
   },
   bottomBtnText: {
     color: "#00a4e3",

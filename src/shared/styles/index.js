@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native'
+import { COLORS } from 'src/constants/colors'
 
 const globalStyles = StyleSheet.create({
     textLigth:{
-        color: "#fff"
+        color: COLORS.LIGTH
     },
     backgroundColor:{
-        backgroundColor:'#15212b'
+        backgroundColor: COLORS.PRIMARY
     },
     inspect: {
         borderColor: 'green',

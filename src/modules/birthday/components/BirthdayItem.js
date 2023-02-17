@@ -4,8 +4,11 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from 'src/firebase/config';
 import { AuthUserContext } from 'src/context/AuthUserContext';
 import globalStyles from 'src/shared/styles';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from 'src/constants/routes';
 
 export default function BirthdayItem({ birthday, setIsloading}) {
+    const navigation = useNavigation()
     const {user} = useContext(AuthUserContext)
     return (
         <TouchableOpacity
@@ -15,9 +18,10 @@ export default function BirthdayItem({ birthday, setIsloading}) {
                 birthday.remaining_days == 0 && styles.today,
                 birthday.remaining_days >= 1 && styles.normal
             ]}
-            onPress={() => alertDelete({birthday, user, setIsloading}) }>
+            onLongPress={() => alertDelete({birthday,setIsloading,user})}
+            onPress={() =>  navigation.navigate(ROUTES.DETAIL_BIRTHDAY, {id:birthday.id, hideHeader:true})}>
             <Text style={styles.userName}>
-                {`${birthday.name} ${birthday.lastname}`}
+                {`${birthday.name} ${birthday.lastname}`},
             </Text>
 
             {birthday.is_past ?

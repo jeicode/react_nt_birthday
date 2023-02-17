@@ -1,9 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeStack from '../modules/home/HomeStack';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign, EvilIcons, Ionicons } from '@expo/vector-icons';
 import globalStyles from 'src/shared/styles';
 import BirthdayFormStack from '../modules/birthday/stacks/BirthdayFormStack';
 import NotificationStack from 'src/modules/notification/NotificationStack';
+import { StyleSheet } from 'react-native';
+import ConfigurationStack from 'src/modules/configurations/ConfigurationStack';
+import HomeIcon from 'src/shared/components/icons/HomeIcon';
+import NotificationIcon from 'src/shared/components/icons/NotificationIcon';
 
 
 const Tab = createBottomTabNavigator();
@@ -11,21 +15,20 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabsNavigator() {
     return (
         <Tab.Navigator
-            initialRouteName='home'
+            initialRouteName='homeTab'
             screenOptions={{
                 headerShown: false,
-                tabBarStyle: [globalStyles.backgroundColor, {
-                    paddingBottom: 12,
-                    height: 60
-                }],
+                tabBarStyle: [styles.tabBarStyle],
             }}>
+
             <Tab.Screen
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({ color, size }) => <AntDesign name="home" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) =>  <HomeIcon color={color} size={size}/>,
                 }}
                 name="homeTab"
-                component={HomeStack} />
+                component={HomeStack}
+            />
 
             <Tab.Screen
                 options={{
@@ -41,13 +44,31 @@ export default function BottomTabsNavigator() {
             <Tab.Screen
                 options={{
                     title: 'Notifications',
-                    tabBarIcon: ({ color, size }) => <Ionicons name="notifications" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <NotificationIcon color={color} size={size}/>,
                     tabBarBadge: 3
                 }}
                 name="notificationsTab"
                 component={NotificationStack}
+            />
 
+            <Tab.Screen
+                options={{
+                    title: 'Configurations',
+                    tabBarIcon: ({ color, size }) => <EvilIcons name="gear" size={size} color={color} />
+                }}
+                name="configurationsTab"
+                component={ConfigurationStack}
             />
         </Tab.Navigator>
     );
 }
+
+
+const styles = StyleSheet.create({
+    tabBarStyle: {
+        backgroundColor: globalStyles.backgroundColor.backgroundColor,
+        paddingBottom: 12,
+        height: 60,
+        borderTopWidth: 0
+    }
+})
