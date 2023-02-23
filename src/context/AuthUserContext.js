@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { createContext, useState } from 'react'
 
-const AuthUserContext = React.createContext(null)
+const AuthUserContext = createContext(null)
 
 function AuthUserContextProvider({children}) {
     const [user, setUser] = useState(undefined)
