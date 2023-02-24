@@ -5,7 +5,6 @@ import FormikInput from '../../../shared/components/FormikInput'
 import { loginSchema } from '../../../formsValidations/authSchemas'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebase/config'
-import globalStyles from 'src/shared/styles'
 
 const initialValues = {
     password: '123456',
